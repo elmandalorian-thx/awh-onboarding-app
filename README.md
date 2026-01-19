@@ -1,5 +1,9 @@
 # AWH Wellness Questionnaire
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20App-4A7C59?style=for-the-badge)](https://elmandalorian-thx.github.io/awh-onboarding-app/)
+
+**[Try the Live App](https://elmandalorian-thx.github.io/awh-onboarding-app/)**
+
 A web-based onboarding questionnaire app for Advanced Women's Health that guides users through 5 questions and outputs 2 personalized wellness plans (Movement Plan + Nutrition Plan).
 
 ## Overview
