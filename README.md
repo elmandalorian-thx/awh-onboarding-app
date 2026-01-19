@@ -92,7 +92,11 @@ function determineNutritionPlan(q1, q2, q4) {
 
 The movement plan uses a safety-first approach:
 
+**Stabilize & Gentle Path** (automatic for safety):
+- Pregnant or postpartum users (regardless of other factors)
+
 **Progressive Strength Path** requires ALL of:
+- Not pregnant/postpartum
 - Stable energy and good recovery
 - Less than 2 symptoms
 - User indicates readiness for strength training
@@ -100,7 +104,12 @@ The movement plan uses a safety-first approach:
 **Stabilize & Gentle Path** - All other cases
 
 ```javascript
-function determineMovementPlan(q3, q4, q5) {
+function determineMovementPlan(q1, q3, q4, q5) {
+    // Safety first: Pregnant/postpartum always get gentle path
+    if (q1 === 'pregnant_conceiving' || q1 === 'postpartum') {
+        return 'stabilize_gentle';
+    }
+
     const symptomCount = q4.filter(s => s !== 'none').length;
     const qualifiesForStrength =
         q3 === 'stable_recovery' &&

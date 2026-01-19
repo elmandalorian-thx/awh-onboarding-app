@@ -157,12 +157,18 @@ function determineNutritionPlan(q1, q2, q4) {
  * Determines the movement plan based on answers
  * Uses safety-first logic
  *
+ * @param {string} q1 - Life stage answer (for safety considerations)
  * @param {string} q3 - Energy/recovery answer
  * @param {string[]} q4 - Current symptoms (array)
  * @param {string} q5 - Movement preference answer
  * @returns {string} - Movement plan key
  */
-function determineMovementPlan(q3, q4, q5) {
+function determineMovementPlan(q1, q3, q4, q5) {
+    // Safety first: Pregnant/postpartum always get gentle path
+    if (q1 === 'pregnant_conceiving' || q1 === 'postpartum') {
+        return 'stabilize_gentle';
+    }
+
     // Count symptoms (exclude 'none')
     const symptomCount = q4.filter(s => s !== 'none').length;
 
@@ -190,7 +196,7 @@ function calculateResults() {
     const { q1, q2, q3, q4, q5 } = state.answers;
 
     state.results.nutritionPlan = determineNutritionPlan(q1, q2, q4);
-    state.results.movementPlan = determineMovementPlan(q3, q4, q5);
+    state.results.movementPlan = determineMovementPlan(q1, q3, q4, q5);
 
     console.log('Results calculated:', state.results);
     console.log('Based on answers:', state.answers);
@@ -626,10 +632,11 @@ window.AWHTest = {
     testPregnant: () => {
         const result = {
             nutrition: determineNutritionPlan('pregnant_conceiving', 'feel_better', []),
-            movement: determineMovementPlan('stable_recovery', [], 'ready_strength')
+            movement: determineMovementPlan('pregnant_conceiving', 'stable_recovery', [], 'ready_strength')
         };
         console.log('Pregnant user test:', result);
         console.assert(result.nutrition === 'prenatal', 'Should get prenatal nutrition');
+        console.assert(result.movement === 'stabilize_gentle', 'Should get stabilize_gentle movement');
         return result;
     },
 
@@ -637,7 +644,7 @@ window.AWHTest = {
     testHealthyReady: () => {
         const result = {
             nutrition: determineNutritionPlan('generally_healthy', 'build_strength', ['none']),
-            movement: determineMovementPlan('stable_recovery', ['none'], 'ready_strength')
+            movement: determineMovementPlan('generally_healthy', 'stable_recovery', ['none'], 'ready_strength')
         };
         console.log('Healthy ready user test:', result);
         console.assert(result.nutrition === 'general_health', 'Should get general_health nutrition');
@@ -649,7 +656,7 @@ window.AWHTest = {
     testChronicDigestive: () => {
         const result = {
             nutrition: determineNutritionPlan('chronic_symptoms', 'digestive', ['digestive_issues', 'poor_sleep']),
-            movement: determineMovementPlan('unpredictable', ['digestive_issues', 'poor_sleep'], 'gentle')
+            movement: determineMovementPlan('chronic_symptoms', 'unpredictable', ['digestive_issues', 'poor_sleep'], 'gentle')
         };
         console.log('Chronic digestive user test:', result);
         console.assert(result.nutrition === 'gut_health', 'Should get gut_health nutrition');
@@ -661,7 +668,7 @@ window.AWHTest = {
     testBurnoutMetabolic: () => {
         const result = {
             nutrition: determineNutritionPlan('burnout_fragile', 'weight_energy', ['energy_crashes']),
-            movement: determineMovementPlan('drained', ['energy_crashes'], 'need_guidance')
+            movement: determineMovementPlan('burnout_fragile', 'drained', ['energy_crashes'], 'need_guidance')
         };
         console.log('Burnout metabolic user test:', result);
         console.assert(result.nutrition === 'metabolic', 'Should get metabolic nutrition');
