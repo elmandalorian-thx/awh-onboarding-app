@@ -81,7 +81,8 @@ body {
     font-size: var(--font-size-base);
     line-height: 1.6;
     color: var(--color-text);
-    background-color: var(--color-bg);
+    background: linear-gradient(180deg, #ffffff 0%, #f5eef0 50%, #efe5e8 100%);
+    background-attachment: fixed;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -201,44 +202,46 @@ body {
 /* Welcome Screen */
 .welcome-content {
     text-align: center;
-    padding: var(--spacing-md) var(--spacing-md) var(--spacing-lg);
+    padding: 0 var(--spacing-lg) var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .welcome-icon {
-    font-size: 48px;
+    font-size: 42px;
     margin-bottom: var(--spacing-md);
     animation: float 3s ease-in-out infinite;
 }
 
 @keyframes float {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    50% { transform: translateY(-8px); }
 }
 
 .welcome-content h1 {
     font-size: var(--font-size-2xl);
     font-weight: 700;
     color: var(--color-text);
-    margin-bottom: var(--spacing-sm);
-    line-height: 1.3;
+    margin-bottom: var(--spacing-md);
+    line-height: 1.25;
+    letter-spacing: -0.5px;
 }
 
 .welcome-text {
     font-size: var(--font-size-lg);
     color: var(--color-text);
-    margin-bottom: var(--spacing-sm);
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-bottom: var(--spacing-md);
+    max-width: 480px;
+    line-height: 1.5;
 }
 
 .welcome-subtext {
     font-size: var(--font-size-base);
     color: var(--color-text-light);
-    margin-bottom: var(--spacing-lg);
-    max-width: 450px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-bottom: var(--spacing-xl);
+    max-width: 420px;
+    line-height: 1.5;
 }
 
 /* Question Header */
@@ -479,16 +482,19 @@ body {
 /* Results Screen */
 .results-content {
     text-align: center;
-    padding: var(--spacing-xl) 0;
+    padding: var(--spacing-md) 0 var(--spacing-xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .results-header {
-    margin-bottom: var(--spacing-2xl);
+    margin-bottom: var(--spacing-xl);
 }
 
 .celebration-icon {
-    font-size: 72px;
-    margin-bottom: var(--spacing-lg);
+    font-size: 56px;
+    margin-bottom: var(--spacing-md);
     animation: celebrate 1s ease;
 }
 
@@ -502,21 +508,25 @@ body {
     font-size: var(--font-size-2xl);
     font-weight: 700;
     color: var(--color-text);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: -0.5px;
 }
 
 .results-intro {
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-base);
     color: var(--color-text-light);
-    max-width: 500px;
+    max-width: 450px;
     margin: 0 auto;
+    line-height: 1.5;
 }
 
 /* Plan Cards */
 .plans-container {
     display: grid;
     gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-2xl);
+    margin-bottom: var(--spacing-xl);
+    width: 100%;
+    max-width: 700px;
 }
 
 @media (min-width: 600px) {
@@ -527,10 +537,10 @@ body {
 
 .plan-card {
     background-color: var(--color-bg-card);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-xl);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-lg) var(--spacing-lg) var(--spacing-xl);
     text-align: center;
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 4px 20px rgba(134, 72, 85, 0.1);
     border: 2px solid transparent;
     transition: all var(--transition-normal);
     animation: slideUp 0.5s ease forwards;
@@ -611,7 +621,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--spacing-lg);
+    gap: var(--spacing-md);
+    width: 100%;
+    max-width: 400px;
 }
 
 .secondary-actions {
@@ -804,17 +816,67 @@ body {
     }
 
     /* Mobile results */
+    .results-content {
+        padding: var(--spacing-sm) 0 var(--spacing-lg);
+    }
+
+    .results-header {
+        margin-bottom: var(--spacing-md);
+    }
+
+    .celebration-icon {
+        font-size: 44px;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .results-header h1 {
+        font-size: var(--font-size-xl);
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .results-intro {
+        font-size: var(--font-size-sm);
+    }
+
+    .plans-container {
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
+    }
+
     .plan-card {
-        padding: var(--spacing-lg);
+        padding: var(--spacing-md) var(--spacing-md) var(--spacing-lg);
+        border-radius: var(--radius-lg);
+    }
+
+    .plan-badge {
+        font-size: 12px;
+        padding: 3px 12px;
+        margin-bottom: var(--spacing-sm);
     }
 
     .plan-icon {
-        font-size: 40px;
+        font-size: 36px;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .plan-name {
+        font-size: var(--font-size-base);
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .plan-description {
+        font-size: var(--font-size-sm);
+        line-height: 1.4;
+    }
+
+    .results-actions {
+        gap: var(--spacing-sm);
     }
 
     .secondary-actions {
         flex-direction: column;
         width: 100%;
+        gap: var(--spacing-sm);
     }
 
     .secondary-actions .btn {
